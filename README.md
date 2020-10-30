@@ -1,2 +1,3 @@
 # PHPPasswordSample
-A small site, where you can encrypt and decrypt form passwords with PHP hash.
+Password hash and verify example with SHA512 encryption.
+You can encrypt and decrypt form passwords with PHP hash.
