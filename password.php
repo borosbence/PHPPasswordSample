@@ -1,13 +1,21 @@
-<?php
+ <?php
+    function encrypt($text)
+    {                      
+        $hashedPwd = hash('sha512', $text);      
+        return strtoupper($hashedPwd);
+    }
+
     if (isset($_POST['password_encrypt'])) {
         $password = $_POST['password1'];
-        $hash = password_hash($password, PASSWORD_DEFAULT);
+        // $hash = password_hash($password, PASSWORD_DEFAULT);
+        $cryptPass = encrypt($password);
+        $hash = password_hash($cryptPass, PASSWORD_DEFAULT);
     }
 
     if (isset($_POST['password_decrypt'])) {
         $password = $_POST['password2'];
         $hash = $_POST['hash'];
-        if (password_verify($password, $hash)) {
+        if (password_verify(encrypt($password), $hash)) {
             $pass = "Password match!";
         } else {
             $pass = "Password invalid!";
@@ -38,10 +46,18 @@
                 <input type="submit" name="password_encrypt">
             </fieldset>
         </form>
+        <fieldset>
+            <legend>SHA512 value:</legend>
+            <?php
+                if (!empty($cryptPass)) {
+                    echo $cryptPass;
+                }
+            ?>
+        </fieldset>
         <form action="" method="post">
             <fieldset>
                 <legend>Password to decrypt</legend>
-                <?php
+                <?php 
                     if (!empty($hash)) {
                         echo '<input type="text" name="hash" value=' . $hash . '>';
                     }
@@ -51,10 +67,8 @@
             </fieldset>
         </form>
         <?php
-            if (!empty($hash)) {
+            if (!empty($hash) && isset($pass)) {
                 echo $pass;
             }
         ?>
     </body>
-
-
