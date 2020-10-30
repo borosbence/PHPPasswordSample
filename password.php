@@ -7,7 +7,6 @@
 
     if (isset($_POST['password_encrypt'])) {
         $password = $_POST['password1'];
-        // $hash = password_hash($password, PASSWORD_DEFAULT);
         $cryptPass = encrypt($password);
         $hash = password_hash($cryptPass, PASSWORD_DEFAULT);
     }
